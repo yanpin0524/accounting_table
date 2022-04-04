@@ -1,0 +1,41 @@
+<div class="container mt-3" style="width: 800px;">
+  <h4 class="text-center mb-5">請輸入你的支出</h4>
+  <form class="" action="/accounting" method="post">
+    <div class="row g-2 pb-5">
+      <label for="name" class="col-md-3 col-form-label text-end">
+        名稱：
+      </label>
+      <div class="col-md-7">
+        <input type="text" name="name" class="form-control" id="name" placeholder="用這筆消費做了什麼..." required>
+      </div>
+    </div>
+    <div class="row g-2 mt-2 pb-5">
+      <label for="date" class="col-md-3 col-form-label text-end">
+        日期：
+      </label>
+      <div class="col-md-7">
+        <input type="date" name="date" class="form-control" id="date" required>
+      </div>
+    </div>
+    <div class="row g-2 mt-2 pb-5">
+      <label for="category" class="col-md-3 col-form-label text-end">
+        類別：
+      </label>
+      <div class="col-md-7">
+        <select class="form-select" name="category" id="category">
+          {{#each catagories}}
+          <option value="{{ this._id }}">{{ this.name }}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="row g-2 mt-2 pb-5">
+        <label for="amount" class="col-md-3 col-form-label text-end">
+          金額：
+        </label>
+        <div class="col-md-7">
+          <input type="number" name="amount" class="form-control" id="amount" min="0" value="0" required>
+        </div>
+      </div>
+      <button>新增支出</button>
+  </form>
+</div>
