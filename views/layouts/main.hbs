@@ -18,8 +18,8 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary d-flex justify-content-between">
       <a class="navbar-brand ms-4" href="/">
-      <i class="fa-solid fa-coins me-1"></i>
-        {{#if isAuthenticated}}{{ user.name}}的 {{/if}}
+        <i class="fa-solid fa-coins me-1"></i>
+        {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
         Expense tracker
       </a>
       {{#if isAuthenticated}}
@@ -30,8 +30,8 @@
     </nav>
   </header>
 
-  <main class="h-75"> 
-      {{{ body }}}
+  <main class="h-75">
+    {{{ body }}}
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
