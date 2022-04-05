@@ -10,7 +10,21 @@ router.get('/', (req, res) => {
     .lean()
     .sort({ date: 'desc' }) // asc
     .then(accountingTable => {
-      res.render('home', { accountingTable })})
+      let totalAmount = 0
+      accountingTable.forEach(item => {
+        totalAmount += item.amount
+      })
+
+      Category.find({})
+        .lean()
+        .then(catagories => {
+          return res.render('home', {
+            accountingTable, 
+            catagories, 
+            totalAmount
+          })
+        })
+    })
     .catch(error => console.error(error))
 })
 

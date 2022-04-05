@@ -1,9 +1,19 @@
-<form action="/search">
-  <h4 class="mb-2">尋找餐廳：</h4>
-  <select class="form-select" name="categoryId" id="categoryId">
-    {{#each catagories}}
-    <option value="{{ this._id }}">{{ this.name }}</option>
-    {{/each}}
-  </select>
-</form>
-<a href="/accounting/new" class="btn btn-primary">Create</a>
+<div class=" mt-3 mx-auto w-50 flex">
+  <form class="input-group" action="/search" method="get">
+    <label class="input-group-text" for="categoryId">選擇類別</label>
+    <select class="form-select" name="categoryId" id="categoryId">
+      <option value="">全部</option>
+      {{#each catagories}}
+      <option value="{{ this._id }}">{{ this.name }}</option>
+      {{/each}}
+    </select>
+    <button class="btn btn-outline-secondary" type="submit">Button</button>
+  </form>
+
+  <div class="d-flex justify-content-center mt-4">
+    <h5 class="fw-normal me-3">總金額：</h5>
+    <h1 class="fs-1 badge bg-primary">{{totalAmount}}</h1>
+  </div>
+
+  <a href="/accounting/new" class="btn btn-primary">Create</a>
+</div>
