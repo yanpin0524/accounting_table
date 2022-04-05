@@ -72,7 +72,6 @@ router.get('/edit/:id', (req, res) => {
               category.preset = false
             }
           })
-
           item.date = moment(item.date).format('YYYY-MM-DD')
           res.render('edit', { item, catagories })
         })
@@ -81,18 +80,45 @@ router.get('/edit/:id', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  const userId = req.user._id
-  const _id = req.params.id
-  const { name, isDone } = req.body
+  Category.find({})
+    .lean()
+    .then(catagories => {
+      const _id = req.params.id
+      const userId = req.user._id
+      const { name, date, categoryId, amount } = req.body
+      const errors = []
 
-  return Todo.findOne({ _id, userId })
-    .then(todo => {
-      todo.name = name
-      todo.isDone = isDone === 'on'
+      catagories.forEach(item => {
+        if (String(item._id) === categoryId) {
+          item.preset = true
+        } else {
+          item.preset = false
+        }
+      })
 
-      return todo.save()
+      if (!name || !date || !categoryId || !amount) {
+        errors.push({ message: '所有欄位都是必填！' })
+      }
+      if (errors.length) {
+        return res.render('new', {
+          errors,
+          name,
+          date,
+          amount,
+          catagories
+        })
+      }
+
+      return Record.findOneAndUpdate({ _id, userId }, {
+        name,
+        date,
+        categoryId,
+        amount,
+        userId
+      })
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
     })
-    .then(() => res.redirect(`/todos/${_id}`))
     .catch(error => console.log(error))
 })
 
