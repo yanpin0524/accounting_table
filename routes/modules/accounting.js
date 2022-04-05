@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const moment = require('moment')
 
 const Record = require('../../models/record')
 const Category = require('../../models/category')
@@ -58,10 +59,25 @@ router.get('/edit/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
 
-  return Todo.findOne({ _id, userId })
+  Category.find({})
     .lean()
-    .then(todo => res.render('edit', { todo }))
-    .catch(error => console.log(error))
+    .then(catagories => {
+      return Record.findOne({ _id, userId })
+        .lean()
+        .then(item => {
+          catagories.forEach(category => {
+            if (String(category._id) === String(item.categoryId)) {
+              category.preset = true
+            } else {
+              category.preset = false
+            }
+          })
+
+          item.date = moment(item.date).format('YYYY-MM-DD')
+          res.render('edit', { item, catagories })
+        })
+        .catch(error => console.log(error))
+    })
 })
 
 router.put('/:id', (req, res) => {
