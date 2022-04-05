@@ -12,15 +12,15 @@ module.exports = (app) => {
 
   // 設定本地登入策略
   // Local
-  passport.use(new LocalStrategy({ usernameField: 'name', passReqToCallback: true }, (req, name, password, done) => {
-    User.findOne({ name })
+  passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    User.findOne({ email })
       .then(user => {
         if (!user) {
-          return done(null, false, req.flash('warning_msg', '這個使用者尚未註冊'))
+          return done(null, false, { message: '這個 電子郵件 尚未註冊' })
         }
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
-            return done(null, false, req.flash('warning_msg', '使用者名稱或密碼不正確'))
+            return done(null, false, { message: '電子郵件或密碼 不正確' })
           }
           return done(null, user)
         })
@@ -32,10 +32,11 @@ module.exports = (app) => {
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
-    profileFields: ['displayName']
+    profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
-    const name = profile._json.name
-    User.findOne({ name })
+    const { name, email } = profile._json
+
+    User.findOne({ email })
       .then(user => {
         if (user) return done(null, user)
 
