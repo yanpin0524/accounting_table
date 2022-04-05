@@ -4,7 +4,7 @@
     <select class="form-select" name="categoryId" id="categoryId" onchange="submit()">
       <option value="">全部</option>
       {{#each catagories}}
-      <option value="{{ this._id }}" {{#if this.preset}}selected="selected"{{/if}}>{{ this.name }}</option>
+      <option value="{{ this._id }}" {{#if this.preset}}selected="selected" {{/if}}>{{ this.name }}</option>
       {{/each}}
     </select>
   </form>
@@ -17,13 +17,23 @@
     <tbody>
       <tr>
         {{#each accountingTable}}
-        <td class="row align-items-center">
+        <td class="row align-items-center border-dark border-bottom">
           <i class="{{this.categoryId.icon}} col-1 fas fa-camera fa-3x"></i>
           <div class="col flex-grow-1">
             <h5 class="text-start m-0">{{this.name}}</h5>
             <p class="ms-3 my-1">{{this.date}}</p>
           </div>
-          <p class="col-1 text-end m-0 fs-4">{{this.amount}}</p>
+          <p class="col-1 text-end me-2 mb-0 p-0 fs-4">{{this.amount}}</p>
+          <div class="col-2 border-start border-primary d-flex justify-content-evenly p-0">
+            <a href="/accounting/edit/:{{this._id}}" class="btn btn-primary btn-sm py-2">
+              <i class="fas fa-edit fa-xl"></i>
+            </a>
+            <form action="/accounting/{{this._id}}?_method=DELETE" method="post">
+              <button class="btn btn-primary btn-sm py-2" type="submit">
+                <i class="fas fa-trash-alt fa-xl"></i>
+              </button>
+            </form>
+          </div>
         </td>
         {{/each}}
       </tr>

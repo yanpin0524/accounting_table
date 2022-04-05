@@ -41,15 +41,6 @@ router.post('', (req, res) => {
     .catch(error => console.log(error))
 })
 
-router.get('/:id', (req, res) => {
-  const userId = req.user._id
-  const _id = req.params.id
-  return Todo.findOne({ _id, userId })
-    .lean()
-    .then(todo => res.render('detail', { todo }))
-    .catch(error => console.log(error))
-})
-
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -80,7 +71,7 @@ router.delete('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
 
-  return Todo.findOne({ _id, userId })
+  return Record.findOne({ _id, userId })
     .then(todo => todo.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
