@@ -1,13 +1,12 @@
 <div class=" mt-3 mx-auto w-50 flex">
   <form class="input-group" action="/search" method="get">
     <label class="input-group-text" for="categoryId">選擇類別</label>
-    <select class="form-select" name="categoryId" id="categoryId">
+    <select class="form-select" name="categoryId" id="categoryId" onchange="submit()">
       <option value="">全部</option>
       {{#each catagories}}
-      <option value="{{ this._id }}">{{ this.name }}</option>
+      <option value="{{ this._id }}" {{#if this.preset}}selected="selected"{{/if}}>{{ this.name }}</option>
       {{/each}}
     </select>
-    <button class="btn btn-outline-secondary" type="submit">Button</button>
   </form>
 
   <div class="d-flex justify-content-center mt-4">
@@ -22,13 +21,13 @@
           <i class="{{this.categoryId.icon}} col-1 fas fa-camera fa-3x"></i>
           <div class="col flex-grow-1">
             <h5 class="text-start m-0">{{this.name}}</h5>
-            <p class="Date">{{this.date}}</p>
+            <p class="ms-3 my-1">{{this.date}}</p>
           </div>
-          <p class="col-1 text-end m-0">{{this.amount}}</p>
+          <p class="col-1 text-end m-0 fs-4">{{this.amount}}</p>
         </td>
         {{/each}}
       </tr>
     </tbody>
   </table>
-  <a href="/accounting/new" class="btn btn-primary">Create</a>
+  <a href="/accounting/new" class="btn btn-primary mt-4">Create</a>
 </div>
