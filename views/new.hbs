@@ -18,11 +18,11 @@
       </div>
     </div>
     <div class="row g-2 mt-2 pb-5">
-      <label for="category" class="col-md-3 col-form-label text-end">
+      <label for="categoryId" class="col-md-3 col-form-label text-end">
         類別：
       </label>
       <div class="col-md-7">
-        <select class="form-select" name="category" id="category">
+        <select class="form-select" name="categoryId" id="categoryId">
           {{#each catagories}}
           <option value="{{ this._id }}">{{ this.name }}</option>
           {{/each}}
