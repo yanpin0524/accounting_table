@@ -1,1 +1,9 @@
+<form action="/search">
+  <h4 class="mb-2">尋找餐廳：</h4>
+  <select class="form-select" name="categoryId" id="categoryId">
+    {{#each catagories}}
+    <option value="{{ this._id }}">{{ this.name }}</option>
+    {{/each}}
+  </select>
+</form>
 <a href="/accounting/new" class="btn btn-primary">Create</a>

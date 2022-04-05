@@ -12,15 +12,15 @@ module.exports = (app) => {
 
   // 設定本地登入策略
   // Local
-  passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+  passport.use(new LocalStrategy({ usernameField: 'email', passReqToCallback: true }, (req, email, password, done) => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
-          return done(null, false, { message: '這個 電子郵件 尚未註冊' })
+          return done(null, false, req.flash('warning_msg', '這個電子郵件尚未註冊'))
         }
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
-            return done(null, false, { message: '電子郵件或密碼 不正確' })
+            return done(null, false, req.flash('warning_msg', '電子郵件或密碼不正確'))
           }
           return done(null, user)
         })

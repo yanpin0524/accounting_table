@@ -14,10 +14,29 @@ router.get('/new', (req, res) => {
 
 router.post('', (req, res) => {
   const userId = req.user._id
-  const addItem = req.body
-  addItem.userId = userId
+  const { name, date, categoryId, amount } = req.body
+  const errors = []
 
-  return Record.create(addItem)
+  if (!name || !date || !categoryId || !amount) {
+    errors.push({ message: '所有欄位都是必填！' })
+  }
+  if (errors.length) {
+    return res.render('new', {
+      errors,
+      name,
+      date,
+      categoryId,
+      amount
+    })
+  }
+
+  return Record.create({
+    name,
+    date,
+    categoryId,
+    amount,
+    userId
+  })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
