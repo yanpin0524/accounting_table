@@ -12,8 +12,23 @@
 
   <div class="d-flex justify-content-center mt-4">
     <h5 class="fw-normal me-3">總金額：</h5>
-    <h1 class="fs-1 badge bg-primary">{{totalAmount}}</h1>
+    <h1 class="fs-1 badge bg-primary">{{totalAmount}} $</h1>
   </div>
-
+  <table class="table table-striped mt-4">
+    <tbody>
+      <tr>
+        {{#each accountingTable}}
+        <td class="row align-items-center">
+          <i class="{{this.categoryId.icon}} col-1 fas fa-camera fa-3x"></i>
+          <div class="col flex-grow-1">
+            <h5 class="text-start m-0">{{this.name}}</h5>
+            <p class="Date">{{this.date}}</p>
+          </div>
+          <p class="col-1 text-end m-0">{{this.amount}}</p>
+        </td>
+        {{/each}}
+      </tr>
+    </tbody>
+  </table>
   <a href="/accounting/new" class="btn btn-primary">Create</a>
 </div>
