@@ -23,24 +23,24 @@ db.once('open', () => {
           }))
       })
       .then((user) => {
-        recordSeed.forEach(seedRecord => {
-          Category.findOne({ name: seedRecord.category })
-            .then(item => {
-              const categoryId = item._id
-
-              Record.create({
+        return Promise.all(Array.from(recordSeed, seedRecord => {
+          return Category.findOne({ name: seedRecord.category })
+            .lean()
+            .then(category => {
+              return Record.create({
                 name: seedRecord.name,
                 date: seedRecord.date,
                 amount: seedRecord.amount,
                 userId: user._id,
-                categoryId
+                categoryId: category._id
               })
             })
-        })
+        }))
       })
+      .then(() => {
+        console.log('種子資料 載入結束')
+        process.exit()
+      })
+      .catch(err => console.log(err))
   })
 })
-  .then(() => {
-    console.log('種子資料 載入結束')
-  })
-  .catch(err => console.log(err))
