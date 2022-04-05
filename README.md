@@ -3,7 +3,7 @@
 
 ## 專案畫面
 
-![image]()
+![image](https://github.com/yanpin0524/expense-tracker/blob/master/images/expense-tracker001.png)
 
 ## 產品功能
 
