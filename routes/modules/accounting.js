@@ -12,36 +12,49 @@ router.get('/new', (req, res) => {
     })
 })
 
-router.post('', (req, res) => {
-  const userId = req.user._id
-  const { name, date, categoryId, amount } = req.body
-  const errors = []
+router.post('/', (req, res) => {
+  Category.find({})
+    .lean()
+    .then(catagories => {
+      const userId = req.user._id
+      const { name, date, categoryId, amount } = req.body
+      const errors = []
 
-  if (!name || !date || !categoryId || !amount) {
-    errors.push({ message: '所有欄位都是必填！' })
-  }
-  if (errors.length) {
-    return res.render('new', {
-      errors,
-      name,
-      date,
-      categoryId,
-      amount
+      catagories.forEach(item => {
+        if (String(item._id) === categoryId) {
+          item.preset = true
+        } else {
+          item.preset = false
+        }
+      })
+
+      if (!name || !date || !categoryId || !amount) {
+        errors.push({ message: '所有欄位都是必填！' })
+      }
+      if (errors.length) {
+        return res.render('new', {
+          errors,
+          name,
+          date,
+          amount,
+          catagories
+        })
+      }
+
+      return Record.create({
+        name,
+        date,
+        categoryId,
+        amount,
+        userId
+      })
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
     })
-  }
-
-  return Record.create({
-    name,
-    date,
-    categoryId,
-    amount,
-    userId
-  })
-    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
-router.get('/:id/edit', (req, res) => {
+router.get('/edit/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
 
