@@ -37,7 +37,7 @@
 1. 請先安裝 Node.js、npm 與 Mongodb
 2. 打開你的終端機，開啟資料庫，並將此專案 Clone 到本地
 ```
-git clone https://github.com/yanpin0524/restaurant_list.git
+git clone https://github.com/yanpin0524/expense-tracker.git
 ```
 3. 之後進入專案資料夾，輸入
 ```
